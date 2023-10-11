@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import './styles.css'; // Import the CSS file
+
+// Rest of your code remains the same
+
 
 type Customer = {
   name: string;
@@ -107,4 +111,5 @@ const CustomerProfile: React.FC = () => {
 };
 
 export default CustomerProfile;
+
 
