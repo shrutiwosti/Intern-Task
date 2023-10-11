@@ -50,10 +50,28 @@ const CustomerProfile: React.FC = () => {
       address: 'Patan',
     },
     {
-      name: 'Suresh Shrestha',
-      age: 29,
+      name: 'Priyasa Karki',
+      age: 39,
       phone: '0001010111',
+      address: 'Palpa',
+    },
+    {
+      name: 'kanchan Shrestha',
+      age: 21,
+      phone: '0001010112',
       address: 'Chitwan',
+    },
+    {
+      name: 'Prianca Rajbhandari',
+      age: 41,
+      phone: '0001013312',
+      address: 'Kathmandu',
+    },
+    {
+      name: 'Sudarshan Bista',
+      age: 49,
+      phone: '0001013112',
+      address: 'Butwal',
     },
   ];
 
@@ -71,10 +89,10 @@ const CustomerProfile: React.FC = () => {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Phone</th>
-            <th>Address</th>
+            <th>Name</th> 
+            <th>Age</th> 
+            <th>Phone</th> 
+            <th>Address</th> 
           </tr>
         </thead>
         <tbody>
