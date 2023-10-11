@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Define the Customer type
 type Customer = {
   name: string;
   age: number;
@@ -8,7 +7,7 @@ type Customer = {
   address: string;
 };
 
-// Reusable CustomerRow component
+// Reusable  components:
 const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ customer, onClick }) => (
   <tr onClick={onClick}>
     <td>{customer.name}</td>
@@ -18,7 +17,7 @@ const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ cu
   </tr>
 );
 
-// Reusable Popup component
+
 const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
   if (!customer) {
     return null;
@@ -38,25 +37,24 @@ const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ c
   );
 };
 
-// Main CustomerProfile component
+// Main component
 const CustomerProfile: React.FC = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   // Dummy data
   const customers: Customer[] = [
     {
-      name: 'John Doe',
-      age: 30,
-      phone: '555-123-4567',
-      address: '123 Main St',
+      name: 'Ashutosh Pradhan',
+      age: 20,
+      phone: '0101010101',
+      address: 'Patan',
     },
     {
-      name: 'Jane Smith',
-      age: 25,
-      phone: '555-987-6543',
-      address: '456 Elm St',
+      name: 'Suresh Shrestha',
+      age: 29,
+      phone: '0001010111',
+      address: 'Chitwan',
     },
-    // Add more customers as needed
   ];
 
   const openPopup = (customer: Customer) => {
