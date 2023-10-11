@@ -1,6 +1,5 @@
-/* styles.css */
 
-/* Style for the table */
+/* table */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -16,7 +15,7 @@ table {
     background-color: #f2f2f2;
   }
   
-  /* Style for the table rows, including hover effect */
+  /* table rows */
   tr {
     cursor: pointer;
   }
@@ -25,7 +24,7 @@ table {
     background-color: #f0f0f0;
   }
   
-  /* Style for the popup container */
+  /* popup container */
   .popup {
     position: fixed;
     top: 0;
@@ -38,7 +37,7 @@ table {
     align-items: center;
   }
   
-  /* Style for the popup content */
+  /* popup content */
   .popup-content {
     background-color: white;
     padding: 20px;
@@ -46,7 +45,7 @@ table {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
   
-  /* Style for the close button in the popup */
+  /* close button  */
   button {
     margin-top: 10px;
     background-color: #f44336;
@@ -57,5 +56,5 @@ table {
     cursor: pointer;
   }
   
-  /* Additional styles can be added here as needed */
+
   
