@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './style.css'; 
 
 type Customer = {
   name: string;
@@ -19,24 +19,6 @@ const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ cu
 );
 
 
-const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
-  if (!customer) {
-    return null;
-  }
-
-  return (
-    <div className="popup">
-      <div className="popup-content">
-        <h2>Customer Details</h2>
-        <p>Name: {customer.name}</p>
-        <p>Age: {customer.age}</p>
-        <p>Phone: {customer.phone}</p>
-        <p>Address: {customer.address}</p>
-        <button onClick={onClose}>Close</button>
-      </div>
-    </div>
-  );
-};
 
 // Main component
 const CustomerProfile: React.FC = () => {
@@ -102,7 +84,6 @@ const CustomerProfile: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <Popup customer={selectedCustomer} onClose={closePopup} />
     </div>
   );
 };
