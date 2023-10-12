@@ -18,7 +18,24 @@ const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ cu
   </tr>
 );
 
+const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
+  if (!customer) {
+    return null;
+  }
 
+  return (
+    <div className="popup">
+      <div className="popup-content">
+        <h3>Customer Details</h3>
+        <p>Name: {customer.name}</p>
+        <p>Age: {customer.age}</p>
+        <p>Phone: {customer.phone}</p>
+        <p>Address: {customer.address}</p>
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
 
 // Main component
 const CustomerProfile: React.FC = () => {
@@ -68,7 +85,7 @@ const CustomerProfile: React.FC = () => {
 
   return (
     <div>
-      <h1>Customer Profiles</h1>
+      <h2>Customer Profiles</h2>
       <table>
         <thead>
           <tr>
@@ -84,6 +101,7 @@ const CustomerProfile: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <Popup customer={selectedCustomer} onClose={closePopup} />
     </div>
   );
 };
