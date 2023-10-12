@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles.css'; // Import the CSS file
+
 
 type Customer = {
   name: string;
