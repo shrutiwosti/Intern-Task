@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import './style.css'; 
 
 type Customer = {
@@ -8,8 +8,8 @@ type Customer = {
   address: string;
 };
 
-// Reusable  components:
-const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ customer, onClick }) => (
+
+const CustomerRow: FC<{ customer: Customer; onClick: () => void }> = ({ customer, onClick }) => (
   <tr onClick={onClick}>
     <td>{customer.name}</td>
     <td>{customer.age}</td>
@@ -18,7 +18,7 @@ const CustomerRow: React.FC<{ customer: Customer; onClick: () => void }> = ({ cu
   </tr>
 );
 
-const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
+const Popup: FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
   if (!customer) {
     return null;
   }
@@ -37,11 +37,9 @@ const Popup: React.FC<{ customer: Customer | null; onClose: () => void }> = ({ c
   );
 };
 
-// Main component
-const CustomerProfile: React.FC = () => {
+const CustomerProfile: FC = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
-  // Dummy data
   const customers: Customer[] = [
     {
       name: 'Ashutosh Pradhan',
