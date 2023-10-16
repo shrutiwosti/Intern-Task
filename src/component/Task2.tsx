@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import './style.css'; 
+import Button from './Task3';
 
 type Customer = {
   name: string;
@@ -15,6 +16,7 @@ const CustomerRow: FC<{ customer: Customer; onClick: () => void }> = ({ customer
     <td>{customer.age}</td>
     <td>{customer.phone}</td>
     <td>{customer.address}</td>
+    <td> <Button/> </td>
   </tr>
 );
 
@@ -91,12 +93,13 @@ const CustomerProfile: FC = () => {
             <th>Age</th> 
             <th>Phone</th> 
             <th>Address</th> 
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {customers.map((customer, index) => (
             <CustomerRow key={index} customer={customer} onClick={() => openPopup(customer)} />
-          ))}
+          ))} 
         </tbody>
       </table>
       <Popup customer={selectedCustomer} onClose={closePopup} />
