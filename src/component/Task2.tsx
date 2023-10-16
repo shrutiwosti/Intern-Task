@@ -9,38 +9,17 @@ type Customer = {
   address: string;
 };
 
+type props = {
+  styles:React.CSSProperties
+}
 
-const CustomerRow: FC<{ customer: Customer; onClick: () => void }> = ({ customer, onClick }) => (
-  <tr onClick={onClick}>
-    <td>{customer.name}</td>
-    <td>{customer.age}</td>
-    <td>{customer.phone}</td>
-    <td>{customer.address}</td>
-    <td> <Button/> </td>
-  </tr>
-);
-
-const Popup: FC<{ customer: Customer | null; onClose: () => void }> = ({ customer, onClose }) => {
-  if (!customer) {
-    return null;
-  }
-
-  return (
-    <div className="popup">
-      <div className="popup-content">
-        <h3>Customer Details</h3>
-        <p>Name: {customer.name}</p>
-        <p>Age: {customer.age}</p>
-        <p>Phone: {customer.phone}</p>
-        <p>Address: {customer.address}</p>
-        <button onClick={onClose}>Close</button>
-      </div>
-    </div>
-  );
-};
 
 const CustomerProfile: FC = () => {
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [popUpData, setPopUpData]=useState({name:"", age:0, phone:"", address:""});
+
+  const [showPopUp, setShowPopUp]=useState(false);
+
+  const [selectedCustomer, setSelectedCustomer] = useState< Customer | null>(null);
 
   const customers: Customer[] = [
     {
@@ -75,13 +54,32 @@ const CustomerProfile: FC = () => {
     },
   ];
 
-  const openPopup = (customer: Customer) => {
-    setSelectedCustomer(customer);
+  const Popup = (styles:props) => {
+    return (
+      <div className="popup" style={styles.styles}>
+        <div className="popup-content">
+          <h3>Customer Details</h3>
+          <input type='text' name="name" onChange={handleChange} value={popUpData.name}/>
+          <input type='number' name="age" onChange={handleChange}  value={popUpData.age}/>
+          <input type='number' name="phone"onChange={handleChange}  value={popUpData.phone}/>
+          <input type='text' name="address" onChange={handleChange}  value={popUpData.address}/>
+          <button onClick={()=>{setShowPopUp(false)}}>Close</button>
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
+      </div>
+    );
   };
 
-  const closePopup = () => {
-    setSelectedCustomer(null);
+  const openPopup = (customer: Customer) => {
+    setSelectedCustomer(customer);
+    setPopUpData(customer);
   };
+
+  function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
+    console.log(event.target.value);
+    setPopUpData({...popUpData, [event.target.name]:event.target.value})
+  }
 
   return (
     <div>
@@ -98,11 +96,17 @@ const CustomerProfile: FC = () => {
         </thead>
         <tbody>
           {customers.map((customer, index) => (
-            <CustomerRow key={index} customer={customer} onClick={() => openPopup(customer)} />
-          ))} 
+            <tr onClick={()=>{setPopUpData(customer);setShowPopUp(true)}}>
+            <td>{customer.name}</td>
+            <td>{customer.age}</td>
+            <td>{customer.phone}</td>
+            <td>{customer.address}</td>
+            <td> <Button/> </td>
+          </tr>
+          ))} <button> Add </button>
         </tbody>
       </table>
-      <Popup customer={selectedCustomer} onClose={closePopup} />
+      <Popup styles={{display:showPopUp? "block": "none"}}/>
     </div>
   );
 };
