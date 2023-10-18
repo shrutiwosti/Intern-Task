@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useState, useEffect} from 'react';
 import './style.css'; 
 import { Space, Table} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
@@ -16,15 +16,11 @@ type props = {
 };
 
 
-
-
 const CustomerProfile: React.FC<props> = ({customerData}) => {
   const [tableD, setTableD] = useState(customerData)
   const [popUpData, setPopUpData]=useState({name:"", age:0, phone:"", address:""});
   const [showPopUp, setShowPopUp]=useState(false);
   const [isAdd, setIsAdd]=useState(false);
-
-
 
   const openPopup = (record: Customer) => {
 

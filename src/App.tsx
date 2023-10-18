@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Task1 from './component/Task1';
 import Task2 from './component/Task2';
 import { Routes, Route } from 'react-router-dom';
+import ReactDOM from "react-dom";
 
 export type Customer = {
   name: string;
@@ -46,6 +47,8 @@ const customers: Customer[] = [
 ];
 
 function App() {
+
+
   return (
     <div>
       <Routes>
@@ -55,5 +58,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
