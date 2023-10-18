@@ -1,112 +1,133 @@
-import React, { FC, useState } from 'react';
+import React, {  useState } from 'react';
 import './style.css'; 
-import Button from './Task3';
-
-type Customer = {
-  name: string;
-  age: number;
-  phone: string;
-  address: string;
-};
+import { Space, Table} from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import { Customer } from '../App';
+import Task3 from './Task3';
 
 type props = {
-  styles:React.CSSProperties
-}
+  customerData:{  
+    name: string;
+    age: number;
+    phone: string;
+    address: string;
+  }[]
+
+};
 
 
-const CustomerProfile: FC = () => {
+
+
+const CustomerProfile: React.FC<props> = ({customerData}) => {
+  const [tableD, setTableD] = useState(customerData)
   const [popUpData, setPopUpData]=useState({name:"", age:0, phone:"", address:""});
-
   const [showPopUp, setShowPopUp]=useState(false);
+  const [isAdd, setIsAdd]=useState(false);
 
-  const [selectedCustomer, setSelectedCustomer] = useState< Customer | null>(null);
 
-  const customers: Customer[] = [
+
+  const openPopup = (record: Customer) => {
+
+    setPopUpData(record);
+    setShowPopUp(true)
+  };
+  
+  function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
+    setPopUpData({...popUpData, [event.target.name]:event.target.value})
+  }
+
+  const columns: ColumnsType<Customer> = [
     {
-      name: 'Ashutosh Pradhan',
-      age: 20,
-      phone: '0101010101',
-      address: 'Patan',
+      title: 'Name',
+      dataIndex: 'name',
     },
     {
-      name: 'Priyasa Karki',
-      age: 39,
-      phone: '0001010111',
-      address: 'Palpa',
+      title: 'Age',
+      dataIndex: 'age',
     },
     {
-      name: 'kanchan Shrestha',
-      age: 21,
-      phone: '0001010112',
-      address: 'Chitwan',
+      title:"Phone",
+      dataIndex:"phone"
     },
     {
-      name: 'Prianca Rajbhandari',
-      age: 41,
-      phone: '0001013312',
-      address: 'Kathmandu',
+      title: 'Address',
+      dataIndex: 'address',
     },
     {
-      name: 'Sudarshan Bista',
-      age: 49,
-      phone: '0001013112',
-      address: 'Butwal',
-    },
+      title:"Status",
+      render : () => {
+        return <Task3 />;
+      }
+    }
   ];
 
-  const Popup = (styles:props) => {
-    return (
-      <div className="popup" style={styles.styles}>
-        <div className="popup-content">
-          <h3>Customer Details</h3>
-          <input type='text' name="name" onChange={handleChange} value={popUpData.name}/>
-          <input type='number' name="age" onChange={handleChange}  value={popUpData.age}/>
-          <input type='number' name="phone"onChange={handleChange}  value={popUpData.phone}/>
-          <input type='text' name="address" onChange={handleChange}  value={popUpData.address}/>
-          <button onClick={()=>{setShowPopUp(false)}}>Close</button>
-          <button>Edit</button>
-          <button>Delete</button>
-        </div>
-      </div>
-    );
-  };
+  const editOrAdd = () => {  
 
-  const openPopup = (customer: Customer) => {
-    setSelectedCustomer(customer);
-    setPopUpData(customer);
-  };
+    if(!isAdd){
+      edit()
+    }
+    else{
+      add()
+      edit()
+    }
 
-  function handleChange(event:React.ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.value);
-    setPopUpData({...popUpData, [event.target.name]:event.target.value})
+    setShowPopUp(false)
+
+  }
+
+  const add = () => {
+    tableD.push(popUpData)
+  }
+
+  const edit = () => {  
+
+      const newData = tableD.map((record) => {
+        if(record.name === popUpData.name){
+          return popUpData
+        }
+        else{
+          return record
+        }
+      })
+      setTableD(newData)
+    }
+
+  const deleteCust = () => {
+    const newTableD = tableD.filter((newData) => { return newData.name !== popUpData.name})
+    setTableD(newTableD)
+    setShowPopUp(false)
+  }
+
+  const addCustomer = () => {
+    setIsAdd(true)
+    openPopup({name:"", age:0, phone:"", address:""})
   }
 
   return (
     <div>
       <h2>Customer Profiles</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th> 
-            <th>Age</th> 
-            <th>Phone</th> 
-            <th>Address</th> 
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((customer, index) => (
-            <tr onClick={()=>{setPopUpData(customer);setShowPopUp(true)}}>
-            <td>{customer.name}</td>
-            <td>{customer.age}</td>
-            <td>{customer.phone}</td>
-            <td>{customer.address}</td>
-            <td> <Button/> </td>
-          </tr>
-          ))} <button> Add </button>
-        </tbody>
-      </table>
-      <Popup styles={{display:showPopUp? "block": "none"}}/>
+
+        <Table columns={columns} dataSource={tableD} size="middle" rowKey={"name"} className='customerTable' onRow={(record) => {
+          return{onClick : () => {openPopup(record) ; setIsAdd(false)}};
+        }}/>
+        <button onClick={() => {
+          addCustomer()
+        }}>Add new customer</button>
+
+      
+
+      <div className="popup" style={{display:showPopUp? "block": "none"}}>
+        <div className="popup-content">
+          <h3>Customer Details</h3>
+          <input type='text' name="name" onChange={handleChange} value={popUpData.name}/>
+          <input type='number' name="age" onChange={handleChange}  value={popUpData.age}/>
+          <input type='text' name="phone"onChange={handleChange}  value={popUpData.phone}/>
+          <input type='text' name="address" value={popUpData.address} onChange={handleChange}  />
+          <button onClick={() => editOrAdd()}>{isAdd? "Add":"Edit"}</button>
+          <button onClick={deleteCust} style={isAdd? {display:"none"} : {}}>Delete</button>
+          <button onClick={()=>{setShowPopUp(false)}}>Close</button>
+        </div>
+      </div>
     </div>
   );
 };
