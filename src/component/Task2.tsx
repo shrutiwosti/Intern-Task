@@ -113,7 +113,7 @@ const CustomerProfile: React.FC<props> = ({customerData}) => {
 
       
 
-      <div className="popup" style={{display:showPopUp? "block": "none"}}>
+      <div className="popup" style={{display:showPopUp? "block": "none", position:"absolute", top:"30%", left:"40%"}}>
         <div className="popup-content">
           <h3>Customer Details</h3>
           <input type='text' name="name" onChange={handleChange} value={popUpData.name}/>
